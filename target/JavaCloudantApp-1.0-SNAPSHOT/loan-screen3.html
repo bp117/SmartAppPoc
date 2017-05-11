@@ -1,0 +1,917 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Form</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/font-awesome.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+  var navListItems = $('div.setup-panel div a'),
+          allWells = $('.setup-content'),
+          allNextBtn = $('.nextBtn');
+  allPrevBtn = $('.prevBtn');
+
+  allWells.hide();
+   genRand=function() {
+	    return Math.floor(Math.random()*89999999+10000);
+	 }
+  navListItems.click(function (e) {
+      e.preventDefault();
+      var $target = $($(this).attr('href')),
+              $item = $(this);
+
+      if (!$item.hasClass('disabled')) {
+          navListItems.removeClass('btn-primary').addClass('btn-default');
+          $item.addClass('btn-primary');
+          allWells.hide();
+          $target.show();
+          $target.find('input:eq(0)').focus();
+      }
+  });
+
+  allNextBtn.click(function(){
+      var curStep = $(this).closest(".setup-content"),
+          curStepBtn = curStep.attr("id"),
+          nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+          curInputs = curStep.find("input[type='text'],input[type='url']"),
+          isValid = true;
+
+      $(".form-group").removeClass("has-error");
+      for(var i=0; i<curInputs.length; i++){
+          if (!curInputs[i].validity.valid){
+              isValid = false;
+              $(curInputs[i]).closest(".form-group").addClass("has-error");
+          }
+      }
+
+      if (isValid)
+          nextStepWizard.removeAttr('disabled').trigger('click');
+  });
+  
+
+  allPrevBtn.click(function(){
+      var curStep = $(this).closest(".setup-content"),
+          curStepBtn = curStep.attr("id"),
+          prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a"),
+          curInputs = curStep.find("input[type='text'],input[type='url']"),
+          isValid = true;
+
+      $(".form-group").removeClass("has-error");
+      for(var i=0; i<curInputs.length; i++){
+          if (!curInputs[i].validity.valid){
+              isValid = false;
+              $(curInputs[i]).closest(".form-group").addClass("has-error");
+          }
+      }
+
+      if (isValid)
+    	  prevStepWizard.removeAttr('disabled').trigger('click');
+  });
+
+  $('div.setup-panel div a.btn-primary').trigger('click');
+  $('#finName').change(function(){
+	  console.log("Val:",$(this).val());
+	  if($(this).val() != '' || $(this).val()()>0)
+		  $("#accountSec").show();
+  });
+  
+  $('#personalBtn').click(function(){
+	  var lsn = genRand();
+	  sessionStorage.lsn = lsn;
+	  sessionStorage.status1 = "Loan Started";
+	 $('#loanRef').html('<b>Loan Number :'+ sessionStorage.lsn+'</b>'); 
+  });
+
+  $('#propertyBtn').click(function(){
+	  sessionStorage.status2 = "RegB Started";
+  });
+  $('#apprBtn').click(function(){
+	  sessionStorage.status3 = "Appraisal Scheduled";
+  });
+  $('#submitBtn').click(function(){
+	  sessionStorage.status4 = "Preapproved";
+  });
+});
+
+
+</script>
+                            </head>
+
+<body>
+
+
+<div class="container">
+  
+  
+  
+  <div class="loansection">
+  <div class="loansection-form">
+  
+<div class="stepwizard">
+    <div class="stepwizard-row setup-panel">
+      <div class="stepwizard-step">
+        <a href="#step-1" type="button" class="btn btn-primary btn-circle">
+        
+        <i class="glyphicon glyphicon-user"></i>
+        </a>
+        <p>Personal Information</p>
+      </div>
+      <div class="stepwizard-step">
+        <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-university" aria-hidden="true"></i></a>
+        <p>Assets</p>
+      </div>
+      <div class="stepwizard-step">
+        <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">
+        
+         <i class="glyphicon glyphicon-list-alt"></i>
+        </a>
+        <p>Employment</p>
+      </div>
+      <div class="stepwizard-step">
+        <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">
+        
+        <i class="fa fa-building" aria-hidden="true"></i>
+
+         </a>
+        
+       
+        <p>Property Details</p>
+      </div>
+          <div class="stepwizard-step">
+        <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">
+        
+        <i class="fa fa-usd" aria-hidden="true"></i>
+
+        
+        
+        </a>
+        <p>Products and Pricing</p>
+      </div>
+      <div class="stepwizard-step">
+        <a href="#step-6" type="button" class="btn btn-default btn-circle" disabled="disabled">
+        
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        
+        </a>
+        <p>Appraisal Scheduling</p>
+      </div>
+  
+      <div class="stepwizard-step">
+        <a href="#step-7" type="button" class="btn btn-default btn-circle" disabled="disabled">
+        
+        <i class="fa fa-check" aria-hidden="true"></i>
+
+        
+        </a>
+        <p>Loan Status</p>
+      </div>
+    </div>
+  </div>
+ 
+  <form role="form" action="" method="post">
+    <div class="row setup-content" id="step-1">
+      <div class="col-sm-12">
+     
+        <div class="col-sm-12">
+          <h3>Personal Information</h3>
+           <div class="row">
+          <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">First Name</label>
+            <input  maxlength="100" type="text" class="form-control" placeholder="First Name" required="required" />
+          </div>
+          </div>
+             <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Last Name</label>
+            <input maxlength="100" type="text" class="form-control" placeholder="Last Name" required="required"/>
+          </div>
+          </div>
+       
+            
+          <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Phone</label>
+            <input  maxlength="100" type="number" class="form-control" placeholder="Phone"  required="required"/>
+            
+          </div>
+          </div>
+             <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Phone Type</label>
+           <select class="form-control ng-pristine ng-valid ng-touched" name="phoneType"  ng-reflect-name="phoneType">
+                       
+<option selected="true">Select</option><option>Home</option><option>Cell</option><option>Work</option>
+                       </select>
+          </div>
+          </div>
+            <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">ID</label>
+            <input  maxlength="100" type="number" class="form-control" placeholder="Ex:SSN" required="required" />
+          </div>
+          </div>
+             <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">ID Type</label>
+           <select class="form-control ng-pristine ng-valid ng-touched" name="idType"  ng-reflect-name="idType">
+                       
+<option selected="true">Select</option><option>Social Security Number</option><option>Individual Taxpayer ID Number</option><option>Not Available</option>
+                       </select>
+          </div>
+          </div>
+          
+          
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label">Email</label>
+            <input  maxlength="100" type="email" class="form-control" placeholder="Email"  />
+          </div>
+          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" id="personalBtn">Next</button>
+        </div>
+    
+      </div>
+    </div>
+    <div class="row setup-content" id="step-2">
+      <div class="col-sm-12">
+        <div class="col-sm-12">
+          <h3>Assets 	</h3>
+          <div style="float:right; margin-top:5px;" id="loanRef"></div>
+           <div class="row">
+           <div class="col-sm-12">
+          <div class="headingpart">Which financial institution would you like to add accounts for?</div>
+          
+          </div>
+               <div class="col-sm-12">
+          <div class="form-group">
+            <label class="control-label">Enter your financial institution</label>
+            <input maxlength="200" type="text" required="required" class="form-control" placeholder="e.g Local County Bank" id="finName" />
+          </div>
+          </div>
+          
+       <div class="col-sm-12">
+          <div class="form-group">
+            <label class="control-label">Choose from these popular options</label>
+            <div class="popularbank-part">
+              <div class="row">
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+             <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-3">
+            <div class="bankoption">
+            <div class="banklogo"><img src="images/wf-logo.gif" /></div>
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            
+            
+            
+          </div>
+          </div>
+           <div class="col-sm-12" id="accountSec" style="display: none;">
+         <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">Name</label>
+            <input maxlength="200" type="text" readonly="readonly" class="form-control" value="Ken Customer" />
+          </div>
+          </div>
+             <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">Account Type</label>
+            <input maxlength="200" type="text" readonly="readonly" class="form-control" value="Checkings Account" />
+          </div>
+          </div>
+               <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">Balance</label>
+           <i class="tb-icon fa fa-usd input-group-addon"></i>
+            <input maxlength="100" type="number" class="form-control padding40" value="30000" readonly="readonly" />
+          </div>
+          </div>
+          </div>
+          </div>
+          
+       <button id="step-2" class="btn btn-primary prevBtn btn-lg pull-left" type="button" >Previous</button>
+
+          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="row setup-content" id="step-3">
+      <div class="col-sm-12">
+     
+        <div class="col-sm-12">
+          <h3>Employment Details</h3>
+           <div class="row">
+          
+            
+          <div class="col-sm-12">
+          <div class="form-group">
+                      <label class="control-label" for="empStatus">Employment Status</label>  
+                  <select class="form-control ng-pristine ng-valid ng-touched" name="empStatus" style="width:180px" ng-reflect-name="empStatus">
+                       
+<option selected="true">Select</option><option>Employed</option><option>Home Maker</option><option>Retired</option>
+                       </select>
+                </div>
+          
+          
+          <div class="form-group">
+            <label class="control-label">Current Company</label>
+            <input  maxlength="100" type="text" class="form-control" placeholder="Current Company"  />
+          </div>
+          
+          
+          
+          </div>
+             <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Current Salary</label>
+            <i class="tb-icon fa fa-usd input-group-addon"></i>
+            <input maxlength="100" type="number" class="form-control padding40" placeholder="" />
+          </div>
+          </div>
+            <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Employment Type</label>
+              <select class="form-control ng-pristine ng-valid ng-touched" name="empType"  ng-reflect-name="empType">
+                       
+<option selected="true">Select</option><option>Full Time</option><option>Part Time</option>
+                       </select>
+            
+          </div>
+          </div>
+             
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label">Company Address</label>
+            <textarea required="required" class="form-control" placeholder="Enter your company address" ></textarea>
+          </div>
+           
+          <button id="step-3" class="btn btn-primary prevBtn btn-lg pull-left" type="button" >Previous</button>
+          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+        </div>
+    
+      </div>
+    </div>
+    <div class="row setup-content" id="step-4">
+      <div class="col-sm-12">
+     
+        <div class="col-sm-12">
+          <h3>Property Details</h3>
+           <div class="row">
+          
+            
+          <div class="col-sm-12">
+          
+          <div class="form-group">
+            <label class="control-label">Street Address</label>
+            <input  maxlength="100" type="text" class="form-control" placeholder="Street Address" id="strAddr" onFocus="geolocate()" />
+          </div>
+          
+          </div>
+             
+            <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">City</label>
+           <input  maxlength="100" type="text" class="form-control" placeholder="city" id="locality" />
+          </div>
+          </div>
+             <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">State</label>
+            <input maxlength="100" type="text" class="form-control" placeholder="state" id="administrative_area_level_1" />
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Zip</label>
+            <input maxlength="100" type="text" class="form-control" placeholder="Zip" id="postal_code" />
+          </div>
+          </div>
+          </div>
+          
+         
+           
+          <button id="step-4" class="btn btn-primary prevBtn btn-lg pull-left" type="button" >Previous</button>
+          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" id="propertyBtn" >Next</button>
+        </div>
+    
+      </div>
+    </div>
+    <div class="row setup-content" id="step-6">
+      <div class="col-sm-12">
+        <div class="col-md-12">
+          <h3>Appraisal Scheduling</h3>
+          <div class="scheduling-section">
+          <div class="tabparttop">
+          <div class="imagepart"><img src="images/wf-logo.gif" /></div>
+          <div class="imageparttext">Block A, Building 3, Unitech Infospace,<br />Hyderabad 500090</div>
+          
+          </div>
+          <div class="bookapor">Make An Appointment</div>
+          <div class="bookapor2">Book the first available Appointment</div>
+          <h1>Wednesday, Ahgust, 15, 2017</h1>
+          <p>10, Appointment available </p>
+          <div class="appor-box">
+          <div class="datbox">3.00 PM</div>
+          <div class="datbox">5.00 PM</div>
+          <div class="datbox">7.00 PM</div>
+          <div class="datbox">9.00 PM</div>
+          <div class="datbox">9.00 PM</div>
+          <div class="datbox">9.00 PM</div>
+          
+          </div>
+          
+          <p>Average Appointment Duration</p>
+           <a href="#" class="booknowbut">BOOK NOW</a>
+          
+          
+          <div class="midsumery-text">
+          Need to select a different date? Simply tap “Show More Days” and EXOS<br /> will allow you to select from calendar mode.
+          
+          
+          
+          </div>
+          </div>
+          
+          
+          
+       
+          
+            <button id="step-6" class="btn btn-primary prevBtn btn-lg pull-left" type="button" >Previous</button>
+          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" id="apprBtn">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="row setup-content" id="step-5">
+      <div class="col-sm-12">
+        <div class="col-sm-12">
+          <h3>Products and Pricing</h3>
+           <div class="row">
+           <div class="col-sm-12">
+          <div class="headingpart">Which financial institution would you like to add accounts for?</div>
+           <div class="headingpart">Sherrie, Please review the loan option that you're interested in.</div>
+            <div class="headingpart">Keep in mind that these rates may changes.</div>
+          
+          </div>
+          
+          
+          
+          <div class="col-sm-12">
+          <div class="selectloan">
+    <h2>30-Year Fixed Rate with BPMI</h2>
+          <div class="loancategory">
+          <div class="left">
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          </div>
+          <div class="right">
+          <div class="buttonpart">
+          <a href="#" class="butblue2">View Details</a>
+          
+          </div>
+          <div class="buttonpart">
+                    <a href="#" class="butblue">Select Loan</a>
+
+          
+          
+          </div>
+          
+          
+          </div>
+          
+          </div>
+          
+          </div>
+          
+          
+          
+          
+          </div>
+          <div class="col-sm-12">
+          <div class="selectloan">
+    <h2>30-Year Fixed Rate with BPMI</h2>
+          <div class="loancategory">
+          <div class="left">
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          </div>
+          <div class="right">
+          <div class="buttonpart">
+          <a href="#" class="butblue2">View Details</a>
+          
+          </div>
+          <div class="buttonpart">
+                    <a href="#" class="butblue">Select Loan</a>
+
+          
+          
+          </div>
+          
+          
+          </div>
+          
+          </div>
+          
+          </div>
+          
+          
+          
+          
+          </div>
+          <div class="col-sm-12">
+          <div class="selectloan">
+    <h2>30-Year Fixed Rate with BPMI</h2>
+          <div class="loancategory">
+          <div class="left">
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          </div>
+          <div class="right">
+          <div class="buttonpart">
+          <a href="#" class="butblue2">View Details</a>
+          
+          </div>
+          <div class="buttonpart">
+                    <a href="#" class="butblue">Select Loan</a>
+
+          
+          
+          </div>
+          
+          
+          </div>
+          
+          </div>
+          
+          </div>
+          
+          
+          
+          
+          </div>
+          <div class="col-sm-12">
+          <div class="selectloan">
+    <h2>30-Year Fixed Rate with BPMI</h2>
+          <div class="loancategory">
+          <div class="left">
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          <div class="loantitle"><b>Loan Amount</b></div>
+          <div class="loantitle">$15200</div>
+          <div class="loantitle"><b>Monthly Payment</b></div>
+          <div class="loantitle">$2000</div>
+          </div>
+          <div class="right">
+          <div class="buttonpart">
+          <a href="#" class="butblue2">View Details</a>
+          
+          </div>
+          <div class="buttonpart">
+                    <a href="#" class="butblue">Select Loan</a>
+
+          
+          
+          </div>
+          
+          
+          </div>
+          
+          </div>
+          
+          </div>
+          
+          
+          
+          
+          </div>
+       
+             
+          
+          </div>
+          
+            <button id="step-5" class="btn btn-primary prevBtn btn-lg pull-left" type="button" >Previous</button>
+          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" id="submitBtn">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="row setup-content" id="step-7">
+      <div class="col-sm-12">
+        
+        
+        <div class="col-sm-12">
+          <h3>Loan Status</h3>
+           <div class="row">
+           <div class="col-sm-12">
+          <div class="headingpart">Documents Required for Loans</div>
+          
+          </div>
+            <div class="loanstatus">
+            <div class="col-md-4">
+            <div class="loanstutasimagepart"><img src="images/doc-pic.jpg" /></div>
+            
+            
+            </div>
+             <div class="col-md-8">
+             <div class="doctype">
+             <h3>List of documents for Salaried</h3>
+             <ul>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Proof of Identity:- Passport / Driving License / Voters ID / PAN Card (any one)</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Proof of Residence:- Leave and License Agreement / Utility Bill (not more than 3 months old) / Passport (any one).</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Latest 3 months Bank Statement (where salary/income is credited).</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Salary slips for last 3 months.</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> 2 Passport Size photographs.</li>
+             </ul>
+             
+             </div>
+             
+             
+             
+             </div>
+            
+            </div>   
+          <div class="loanstatus">
+            
+             <div class="col-md-8">
+             <div class="doctype">
+             <h3>List of documents for Self-Employed</h3>
+             <ul>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> KYC Documents : Proof of Identity; Address proof; DOB proof.</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Income proof (audited financials for the last two years).</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Latest 6 months Bank statement.</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Office address proof.</li>
+             <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Proof of continuity of business.</li>
+             </ul>
+             
+             </div>
+             
+             
+             
+             </div>
+            <div class="col-md-4">
+            <div class="loanstutasimagepart"><img src="images/doc-pic.jpg" /></div>
+            
+            
+            </div>
+            </div>
+       
+             
+          
+          </div>
+          
+
+       <button class="btn btn-success btn-lg pull-right" type="submit">Apply Now</button>
+
+        </div>
+        
+        
+        
+      </div>
+    </div>
+  </form>
+  
+  
+  </div>
+ </div> 
+  
+</div>
+ 
+
+<script>
+      // This example displays an address form, using the autocomplete feature
+      // of the Google Places API to help users fill in the information.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var placeSearch, autocomplete;
+      var componentForm = {
+    	        locality: 'long_name',
+    	        administrative_area_level_1: 'short_name',
+    	        postal_code: 'short_name'
+    	      };
+
+
+      function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('strAddr')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+      }
+
+      function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+          document.getElementById(component).value = '';
+          document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+          }
+        }
+      }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB-6vnrKvsddLkJn1IhLRg0dt7maZmX0s&libraries=places&callback=initAutocomplete"
+        async defer></script>
+
+</body>
+</html>

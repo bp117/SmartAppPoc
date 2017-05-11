@@ -1,0 +1,3 @@
+example\nosql\AttachServlet.class
+example\nosql\ResourceServlet.class
+example\nosql\CloudantClientMgr.class
