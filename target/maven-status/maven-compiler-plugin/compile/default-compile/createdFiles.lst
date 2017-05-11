@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 example\nosql\AttachServlet.class
 example\nosql\ResourceServlet.class
 example\nosql\CloudantClientMgr.class
-=======
-example/nosql/AttachServlet.class
-example/nosql/ResourceServlet.class
-example/nosql/CloudantClientMgr.class
->>>>>>> 23eef1e08f10869e5f70be3bfa353ba363b4a9e7
