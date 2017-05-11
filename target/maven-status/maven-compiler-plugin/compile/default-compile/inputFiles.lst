@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 C:\core-dev\SA2.0_POC\SmartAppPoc-master\src\main\java\example\nosql\AttachServlet.java
 C:\core-dev\SA2.0_POC\SmartAppPoc-master\src\main\java\example\nosql\CloudantClientMgr.java
 C:\core-dev\SA2.0_POC\SmartAppPoc-master\src\main\java\example\nosql\ResourceServlet.java
+=======
+/Users/binduraj/Documents/Bindu/cloudpoc/DemoWebApp/src/main/java/example/nosql/CloudantClientMgr.java
+/Users/binduraj/Documents/Bindu/cloudpoc/DemoWebApp/src/main/java/example/nosql/AttachServlet.java
+/Users/binduraj/Documents/Bindu/cloudpoc/DemoWebApp/src/main/java/example/nosql/ResourceServlet.java
+>>>>>>> 23eef1e08f10869e5f70be3bfa353ba363b4a9e7
